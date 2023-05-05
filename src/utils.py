@@ -1,5 +1,5 @@
 import json
-from datetime import date
+
 
 def load_data(path):
     """Загружает данные о трансакциях из словаря .json"""
@@ -17,9 +17,10 @@ def get_filtered_data(path):
             filtered_data.append(i)
     return filtered_data
 
+
 def dict_modification(data):
     """Перепаковывает словари в списке, оставляя только требуемые параметры и добавляя параметры,
-    которые в словаре отсутствуют"""
+    которые в словаре отсутствуют, сортирует список по датеgit"""
     new_list = []
     for item in data:
         new_dict = {}
@@ -49,6 +50,33 @@ def dict_modification(data):
             new_dict["currency"] = "Not found"
         new_list.append(new_dict)
     return sorted(new_list, key=lambda x: x["date"], reverse=True)
+
+def date_formatted(new_list):
+    """Переписывает дату в требуемом формате"""
+    for i in new_list:
+        year, month, day = i["date"].split("-")
+        i["date"] = f"{day}.{month}.{year}"
+
+    return new_list
+
+def masked_from(from_param):
+    """Закрывает часть информации в выводе в соответствие с требованиями"""
+    if len(from_param) == 25:
+        return f"Счет **{from_param[-4:]}"
+    elif len(from_param) == 9:
+        return from_param
+    else:
+        return f"{from_param[:-12]} {from_param[-11:-10]}** **** {from_param[-4:]} ->"
+
+def masked_to(to_param):
+    """Закрывает часть информации в выводе в соответствие с требованиями"""
+    if len(to_param) == 25:
+        return f"Счет **{to_param[-4:]}"
+    elif len(to_param) == 9:
+        return to_param
+    else:
+        return f"{to_param[:-12]} {to_param[-11:-10]}** **** {to_param[-4:]} ->"
+
 
 
 
