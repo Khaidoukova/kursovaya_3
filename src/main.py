@@ -1,7 +1,7 @@
 from utils import load_data, get_filtered_data, dict_modification, date_formatted, masked_from, masked_to
 
 raw_data = load_data("operations.json")
-filtered_data = get_filtered_data("operations.json")
+filtered_data = get_filtered_data(raw_data)
 list_of_dicts = dict_modification(filtered_data)
 new_list = date_formatted(list_of_dicts)
 operation = ""

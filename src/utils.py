@@ -8,11 +8,10 @@ def load_data(path):
         return data
 
 
-def get_filtered_data(path):
+def get_filtered_data(data):
     """ Фильтрует данные по параметру "EXECUTED" и создает новый список транзакций"""
-    raw_data = load_data(path)
     filtered_data = []
-    for i in raw_data:
+    for i in data:
         if i.get("state") == "EXECUTED":
             filtered_data.append(i)
     return filtered_data
@@ -56,7 +55,6 @@ def date_formatted(new_list):
     for i in new_list:
         year, month, day = i["date"].split("-")
         i["date"] = f"{day}.{month}.{year}"
-
     return new_list
 
 def masked_from(from_param):
@@ -75,7 +73,7 @@ def masked_to(to_param):
     elif len(to_param) == 9:
         return to_param
     else:
-        return f"{to_param[:-12]} {to_param[-11:-10]}** **** {to_param[-4:]} ->"
+        return f"{to_param[:-12]} {to_param[-11:-10]}** **** {to_param[-4:]}"
 
 
 
