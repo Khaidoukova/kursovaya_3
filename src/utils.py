@@ -23,30 +23,16 @@ def dict_modification(data):
     new_list = []
     for item in data:
         new_dict = {}
-        try:
-            new_dict["date"] = item["date"][:10]
-        except KeyError:
-            new_dict["date"] = "Not fount"
-        try:
-            new_dict["description"] = item["description"]
-        except KeyError:
-            new_dict["description"] = "Not found"
+        new_dict["date"] = item["date"][:10]
+        new_dict["description"] = item["description"]
         try:
             new_dict["from"] = item["from"]
         except KeyError:
             new_dict["from"] = "Not found"
-        try:
-            new_dict["to"] = item["to"]
-        except KeyError:
-            new_dict["to"] = "Not found"
-        try:
-            new_dict["amount"] = item["operationAmount"]["amount"]
-        except KeyError:
-            new_dict["amount"] = "Not found"
-        try:
-            new_dict["currency"] = item["operationAmount"]["currency"]["name"]
-        except KeyError:
-            new_dict["currency"] = "Not found"
+        new_dict["to"] = item["to"]
+        new_dict["amount"] = item["operationAmount"]["amount"]
+        new_dict["currency"] = item["operationAmount"]["currency"]["name"]
+        new_dict["currency"] = item["operationAmount"]["currency"]["name"]
         new_list.append(new_dict)
     return sorted(new_list, key=lambda x: x["date"], reverse=True)
 
@@ -70,8 +56,6 @@ def masked_to(to_param):
     """Закрывает часть информации в выводе в соответствие с требованиями"""
     if len(to_param) == 25:
         return f"Счет **{to_param[-4:]}"
-    elif len(to_param) == 9:
-        return to_param
     else:
         return f"{to_param[:-12]} {to_param[-11:-10]}** **** {to_param[-4:]}"
 

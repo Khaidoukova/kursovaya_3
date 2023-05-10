@@ -18,7 +18,7 @@ def test_data():
 
 
 def test_load_data(test_data):
-    data = load_data(test_data)
+    data = load_data("./tests/operations.json")
     assert isinstance(data, list)
 
 def test_get_filtered_data(test_data):
@@ -38,6 +38,10 @@ def test_date_formatted(test_data):
 
 def test_masked_from(test_data):
     assert masked_from('Visa Classic 2842878893689012') == "Visa Classic 2842 7** **** 9012 ->"
+    assert masked_from('Счет 27248529432547658655') == "Счет **8655"
+    assert masked_from("Not found") == "Not found"
 
 def test_masked_to(test_data):
     assert masked_to('Visa Classic 2842878893689012') == "Visa Classic 2842 7** **** 9012"
+    assert masked_to('Счет 27248529432547658655') == "Счет **8655"
+
